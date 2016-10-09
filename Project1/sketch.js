@@ -1,17 +1,43 @@
 var dChange = 2;//diameter change per frame
 var d = 60; //diameter 
 var y = 400;
+var x = 50;
 
 function setup() {
    createCanvas( 800, 800 );
 }
 
 function draw() {
-  if( !keyIsDown(UP_ARROW)){
+  if( !keyIsDown(UP_ARROW) && !keyIsDown(DOWN_ARROW)){
     background(255);
+    y = 400;
   }
+  rainbow(y);
+  if( mouseIsPressed){
+    rainbow(y - 240);
+    rainbow(y - 120);
+    rainbow(y + 120);
+    rainbow(y + 240);
+  }
+  
+  d = d + dChange;
+  
+  if (d > 105){
+    dChange = -2;
+  } else if( d < 60) {
+    dChange = 2;
+  }
+  
+  if( keyIsDown(UP_ARROW)){
+    y = y - 5;
+  } else if( keyIsDown(DOWN_ARROW)){
+    y = y + 5;
+  }
+
+}
+
+function rainbow(rowY){
   var i = 0;
-  var x = 50;
   while( x < 800 ){
     if( i == 0 ){
       fill(255, 0, 0);//red
@@ -29,26 +55,11 @@ function draw() {
       fill( 160, 32, 240);//purple
     }
     
-    ellipse( x, y, d, d);
+    
+    ellipse( x, rowY, d, d);
     x = x + 115;
     i = i + 1; 
   }
-  d = d + dChange;
   
-  if (d > 105){
-    dChange = -2;
-  }
-  
-  if( d < 60) {
-    dChange = 2;
-  }
-  
-  if( keyIsDown(UP_ARROW)){
-    
-    y = y - 5;
-  }
-  
-  if( keyIsDown(DOWN_ARROW)){
-    y = y + 5;
-  }
+  x = 50;
 }
